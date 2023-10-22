@@ -2,6 +2,7 @@ import React from "react";
 import HeroSection from "./HeroSection";
 import iphone from "../../assets/iphone-14-pro.webp";
 import mac from "../../assets/mac-system-cut.jfif";
+import FeaturedProducts from "./FeaturedProducts";
 
 const HomePage = () => {
   return (
@@ -14,6 +15,7 @@ const HomePage = () => {
         image={iphone}
       />
       {/* Featured Products */}
+      <FeaturedProducts />
       {/* Hero Section */}
       <HeroSection
         title="Build the ultimate setup"
