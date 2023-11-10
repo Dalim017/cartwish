@@ -5,6 +5,9 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import "./SignupPage.css";
 import user from "../../assets/user.webp";
 import { useState } from "react";
+import { getUser, signup } from "../../services/userServices";
+import { Navigate } from "react-router-dom";
+
 const schema = z
   .object({
     name: z
@@ -26,13 +29,28 @@ const schema = z
 
 const SignupPage = () => {
   const [profilePic, setProfilePic] = useState(null);
+  const [formError, setFormError] = useState("");
+
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm({ resolver: zodResolver(schema) });
-  const onSubmit = (formData) => console.log(formData);
-  console.log(profilePic);
+  const onSubmit = async (formData) => {
+    try {
+      await signup(formData, profilePic);
+      window.location = "/";
+    } catch (err) {
+      if (err.response && err.response.status === 400) {
+        setFormError(err.response.data.message);
+      }
+    }
+  };
+
+  if (getUser()) {
+    return <Navigate to="/" />;
+  }
+
   return (
     <section className="align_center form_page">
       <form
@@ -130,7 +148,7 @@ const SignupPage = () => {
             )}
           </div>
         </div>
-
+        {formError && <em className="form_error">{formError}</em>}
         <button className="search_button form_submit" type="submit">
           Submit
         </button>
