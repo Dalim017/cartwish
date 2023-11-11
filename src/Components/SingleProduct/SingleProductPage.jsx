@@ -36,16 +36,18 @@ const SingleProductPage = () => {
           <div className="align_center">
             <div className="single_product_thumbnails">
               {product.images.map((image, index) => (
-                <img
-                  src={`${config.backendURL}/products/${image}`}
-                  alt={product.title}
-                  className={selectedImage === index ? "selected_image" : ""}
-                  onClick={() => setSelectedImage(index)}
-                />
+                <>
+                  <img
+                    src={`${config.backendURL}/products/${image}`}
+                    alt={product.title}
+                    className={selectedImage === index ? "selected_image" : ""}
+                    onClick={() => setSelectedImage(index)}
+                  />
+                </>
               ))}
             </div>
             <img
-              src={`http://localhost:5000/products/${product.images[selectedImage]}`}
+              src={`${config.backendURL}/${product.images[selectedImage]}`}
               alt={product.title}
               className="single_product_display"
             />
